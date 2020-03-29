@@ -17,10 +17,28 @@ body {
 
 h1 {
     text-align: center;
+    font-size: 4rem;
+    font-weight: bolder;
 }
 
-p {
+.content p {
     text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.saveProgress p {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-top: 100px;
+}
+
+.storedHighscore {
+    text-align: center;
+    margin-top: 100px;
+    font: bolder;
+    font-size: 1.8rem;
 }
 
 .container {
@@ -193,11 +211,27 @@ p {
 #goBack {
     background-color: purple;
     color: white;
+    padding: 12px 50px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border: none;
+    font-size: 16px;
+    margin: 15px 0px;
+    cursor: pointer;
 }
 
-#clearScores {
+#clearScore {
     background-color: purple;
     color: white;
+    padding: 12px 50px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border: none;
+    font-size: 16px;
+    margin: 15px 0px;
+    cursor: pointer;
 }
 
 .hide {

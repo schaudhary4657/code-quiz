@@ -8,7 +8,7 @@
 </head>
 <body>
     <nav>
-        <a id = "highScores">View Highscores</a>
+        <a id = "highScores" onclick="storedScore()">View Highscores</a>
         <a id = "time">Time</a>
     </nav> <br />
 
@@ -45,17 +45,19 @@
 
         </div>
 
-        <div id = "score" class = "score hide">
+        <div id = "saveProgress" class = "saveProgress hide">
             <p><b>All Done!</b></p>
-            <p class = "correct-answers">Your final score is: </p>
+            <p class = "correct-answers"></p>
             <p>Enter initials: <input type= "text" id = "initial" /> <button id="submit" type = "button" onclick="saveInitial()">Submit</button> </p>
         </div>
 
         <div id = "storedHighscore" class = "storedHighscore hide">
-            <p><b>Highscores</b></p>
+            <p><b>Highscore</b></p>
             <p><input type= "text" id = "storedInitial"></p>
-            <p><button id="goBack" type = "button" onclick="goBack()">Go Back</button>
-            <button id="clearScore" type = "button" onclick="clearHighscore()">Clear Highscores</button></p>
+            <div>
+                <button id="goBack" type = "button" onclick="goBack()">Go Back</button>
+                <button id="clearScore" type = "button" onclick="clearHighscore()">Clear Highscore</button>
+            </div>
         </div>
 
     </div>

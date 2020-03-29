@@ -4,7 +4,6 @@ const options = document.getElementById("options").children;
 const questionContainerEl = document.getElementById("question-container");
 const questionNumberSpan = document.querySelector(".question-num-value");
 const totalQuestionSpan = document.querySelector(".total-question");
-const storedHighscore = document.querySelector(".storedHighscore");
 const correctAnswer = document.querySelector(".correct-answers");
 const question = document.getElementById("question");
 const answerButtonsEl = document.getElementById("answer-buttons");
@@ -34,29 +33,31 @@ const questions = [
         qn: "Which operator is used to assign a value to a variable?",
         options: ["(a) -","(b) x","(c) *","(d) ="],
         answer: 3
-    },
-
-    {
-        qn: "Inside which HTML element do we put the JavaScript; <.....>?",
-        options: ["(a) javascript","(b) script","(c) scripting","(d) js"],
-        answer: 1
-    },
-    
-    {
-        qn: "Where is the correct place to insert a JavaScript?",
-        options: ["(a) The <body> section","(b) Both the <head> section and the <body> section are correct","(c) The <head> section","(d) None"],
-        answer: 1
     }
+
+    // {
+    //     qn: "Inside which HTML element do we put the JavaScript; <.....>?",
+    //     options: ["(a) javascript","(b) script","(c) scripting","(d) js"],
+    //     answer: 1
+    // },
+    
+    // {
+    //     qn: "Where is the correct place to insert a JavaScript?",
+    //     options: ["(a) The <body> section","(b) Both the <head> section and the <body> section are correct","(c) The <head> section","(d) None"],
+    //     answer: 1
+    // }
 ]
 
-startBtn.addEventListener("click", startQuiz);
+startBtn.addEventListener("click", () => {
+    startQuiz();
+    startTimer();
+});
 
 function startQuiz() {
     startBtn.classList.add("hide");
     content.classList.add("hide");
     questionContainerEl.classList.remove("hide");
     loadQuestion(randomQuestion());
-    startTimer();
 };
 
 // setting questions and options and answers
@@ -118,10 +119,6 @@ function selectOption() {
 }
 
 // setting next question
-// function next() {
-//     validate();
-//     randomQuestion();
-// }
 nextBtn.addEventListener("click", () => {
     questionIndex++;
     selectOption();
@@ -134,9 +131,8 @@ function randomQuestion() {
     let randomNumber = Math.floor(Math.random() * questions.length);
     let duplicate = 0;
     
-    if(index == questions.length) {
+    if(index == questions.length || time == 0) {
         gameOver();
-        // nextBtn.innerText = "Game Over";
     } else {
         if(myArray.length > 0) {
             for(let i = 0; i < myArray.length; i++) {
@@ -158,30 +154,37 @@ function randomQuestion() {
     }
 }
 
+// displaying the score
 function gameOver() {
     questionContainerEl.classList.add("hide");
-    document.querySelector(".score").classList.remove("hide");
-    storedHighscore.classList.add("hide");
-    correctAnswer.innerHTML = score;
-    saveInitial();
-}
+    document.querySelector(".saveProgress").classList.remove("hide");
+    document.querySelector(".storedHighscore").classList.add("hide");
+    correctAnswer.innerHTML = "Your final score is: " + score;
+};
 
+// saving the intials in the local storage
 function saveInitial() {
     localStorage.setItem("initial", JSON.stringify(initial));
-    storedScore();
+    // console.log(JSON.parse(localStorage['initial']));
+    document.querySelector(".saveProgress").classList.add("hide");
+    storedHighscore.classList.add("hide");
 }
 
+//getting the initials saved in the local storage
 function storedScore() {
-    document.querySelector(".score").classList.add("hide");
+    document.querySelector(".saveProgress").classList.add("hide");
     storedHighscore.classList.remove("hide");
 
     document.getElementById("storedInitial").innerHTML = JSON.parse(localStorage.getItem("initial"));
-
-    function clearHighscore() {
-        localStorage.removeItem("initial");
-    }
+    // console.log(JSON.parse(localStorage['initial']));
 }
 
+// clearing the saved initial from the local storage
+function clearHighscore() {
+    localStorage.removeItem("initial");
+}
+
+//going back to the main page of the game
 function goBack() {
     window.location.reload();
 }
