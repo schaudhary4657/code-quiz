@@ -8,17 +8,57 @@
 </head>
 <body>
     <nav>
-        <a class = "highScores">View Highscores</a>
-        <a class = "time">Time</a>
+        <a id = "highScores">View Highscores</a>
+        <a id = "time">Time</a>
     </nav> <br />
 
-    <h1 class = "quiz">Code Quiz Challange</h1>
+    <div class = "container" id = "container">
 
-    <p>Try to answer the following code-related questions within the time</p>
-    <p>limit. Keep in mind that incorrect answers will penalize your scoretime</p>
-    <p>by ten seconds!</p> <br />
+        <div class = "content" id = "content">
+            <h1>Code Quiz Challange</h1>
     
-    <button id="start" class="btn">Start Quiz</button>
+            <p>Try to answer the following code-related questions within the time</p>
+            <p>limit. Keep in mind that incorrect answers will penalize your scoretime</p>
+            <p>by ten seconds!</p> <br />
+    
+            <button id = "start-btn" class = "start-btn">Start Quiz</button>
+        </div>
+
+        <div id = "question-container" class = "hide">
+            <div id = "question-number" class = "question-number">
+                <h2>Question <span class = "question-num-value">1 </span> of <span class = "total-question"></span></h2>
+            </div>
+
+            <div id = "question">Question</div>
+            <div id = "options" class = "options btn-grid">
+                <div id = "0" class = "option1 btn" onclick = "check(this)">Option 1</div>
+                <div id = "1" class = "option2 btn" onclick = "check(this)">Option 2</div>
+                <div id = "2" class = "option3 btn" onclick = "check(this)">Option 3</div>
+                <div id = "3" class = "option4 btn" onclick = "check(this)">Option 4</div>
+            </div>
+
+            <div>
+                <button id = "next-btn" class = "next-btn">Next</button>
+            </div>
+
+            <div class = "result" id = "result"></div>
+
+        </div>
+
+        <div id = "score" class = "score hide">
+            <p><b>All Done!</b></p>
+            <p class = "correct-answers">Your final score is: </p>
+            <p>Enter initials: <input type= "text" id = "initial" /> <button id="submit" type = "button" onclick="saveInitial()">Submit</button> </p>
+        </div>
+
+        <div id = "storedHighscore" class = "storedHighscore hide">
+            <p><b>Highscores</b></p>
+            <p><input type= "text" id = "storedInitial"></p>
+            <p><button id="goBack" type = "button" onclick="goBack()">Go Back</button>
+            <button id="clearScore" type = "button" onclick="clearHighscore()">Clear Highscores</button></p>
+        </div>
+
+    </div>
 
     <script src="script.js"></script>
 </body>

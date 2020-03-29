@@ -1,102 +1,187 @@
-const highScores = document.querySelector(".highScores");
-const time = document.querySelector(".time");
-const startBtn = document.querySelector("#button");
+const startBtn = document.getElementById("start-btn");
+const nextBtn = document.getElementById("next-btn");
+const options = document.getElementById("options").children;
+const questionContainerEl = document.getElementById("question-container");
+const questionNumberSpan = document.querySelector(".question-num-value");
+const totalQuestionSpan = document.querySelector(".total-question");
+const storedHighscore = document.querySelector(".storedHighscore");
+const correctAnswer = document.querySelector(".correct-answers");
+const question = document.getElementById("question");
+const answerButtonsEl = document.getElementById("answer-buttons");
+const initial = document.getElementById("initial");
+const content = document.getElementById("content");
+const container = document.getElementById("container");
+const time = document.getElementById("time");
+let questionIndex;
+let index = 0;
+let myArray = [];
+let score = 0;
 
+const op1 = document.getElementById("0");
+const op2 = document.getElementById("1");
+const op3 = document.getElementById("2");
+const op4 = document.getElementById("3");
 
-startBtn.addEventListener("click", quizQn);
+// listing questions and options and answers
+const questions = [
+    {
+        qn: "How do you declare a JavaScript variable?",
+        options: ["(a) variable carName;","(b) var carName;","(c) v carName;","(d) var = carName;"],
+        answer: 1
+    },
+    
+    {
+        qn: "Which operator is used to assign a value to a variable?",
+        options: ["(a) -","(b) x","(c) *","(d) ="],
+        answer: 3
+    },
 
-function quizQn() {
-    var questions = [
-        {
-            prompt: "Inside which HTML element do we put the JavaScript? \n(a) <javascript>\n(b) <script>\n(c) <scripting>\n(d) <js>",
-            answer: "b"
-        },
-        {
-            prompt: "What is the correct JavaScript syntax to change the content of the HTML element below? <p id="demo">This is a demonstration.</p> \n(a) document.getElementById("demo").innerHTML = "Hello World!";\n(b) #demo.innerHTML = "Hello World!";\n(c) document.getElementByName("p").innerHTML = "Hello World!";\n(d) document.getElement("p").innerHTML = "Hello World!";",
-            answer: "a"
-        },
-        {
-            prompt: "Where is the correct place to insert a JavaScript? \n(a) The <body> section\n(b) Both the <head> section and the <body> section are correct\n(c) The <head> section\n(d) None",
-            answer: "b"
-        },
-        {
-            prompt: "What is the correct syntax for referring to an external script called "xxx.js"? \n(a) <script href="xxx.js">\n(b) <script name="xxx.js">\n(c) <script src="xxx.js">\n(d) <script="xxx.js">",
-            answer: "c"
-        },
-        {
-            prompt: "How do you write "Hello World" in an alert box? \n(a) msgBox("Hello World");\n(b) msg("Hello World");\n(c) alertBox("Hello World");\n(d) alert("Hello World");",
-            answer: "d"
-        },
-        {
-            prompt: "How do you create a function in JavaScript? \n(a) function:myFunction()\n(b) function = myFunction()\n(c) function myFunction()\n(d) function():myfunction",
-            answer: "c"
-        },
-        {
-            prompt: "How do you call a function named "myFunction"? \n(a) myFunction()\n(b) call myFunction()\n(c) call function myFunction()\n(d) call:myFunction()",
-            answer: "a"
-        },
-        {
-            prompt: "How to write an IF statement in JavaScript? \n(a) if i == 5 then\n(b) if i = 5\n(c) if i = 5 then\n(d) if (i == 5)",
-            answer: "d"
-        },
-        {
-            prompt: "How to write an IF statement for executing some code if "i" is NOT equal to 5? \n(a) if i =! 5 then\n(b) if (i <> 5)\n(c) if i <> 5\n(d) if (i != 5)",
-            answer: "d"
-        },
-        {
-            prompt: "How does a WHILE loop start? \n(a) while (i <= 10)\n(b) while i = 1 to 10\n(c) while (i <= 10; i++)\n(d) while (i = 0; i <= 10; i++)",
-            answer: "a"
-        },
-        {
-            prompt: "How does a FOR loop start? \n(a) for (i <= 5; i++)\n(b) for (i = 0; i <= 5; i++)\n(c) for (i = 0; i <= 5)\n(d) for i = 1 to 5",
-            answer: "b"
-        },
-        {
-            prompt: "How can you add a comment in a JavaScript? \n(a) 'This is a comment\n(b) <!--This is a comment-->\n(c) //This is a comment\n(d) :This is a comment",
-            answer: "c"
-        },
-        {
-            prompt: "How to insert a comment that has more than one line? \n(a) //This comment has more than one line//\n(b) /*This comment has more than one line*/\n(c) <!--This comment has more than one line-->\n(d) 'This comment has more than one line'",
-            answer: "b"
-        },
-        {
-            prompt: "What is the correct way to write a JavaScript array? \n(a) var colors = ["red", "green", "blue"]\n(b) var colors = "red", "green", "blue"\n(c) var colors = 1 = ("red"), 2 = ("green"), 3 = ("blue")\n(d) var colors = (1:"red", 2:"green", 3:"blue")",
-            answer: "a"
-        },
-        {
-            prompt: "How do you round the number 7.25, to the nearest integer? \n(a) Math.rnd(7.25)\n(b) round(7.25)\n(c) Math.round(7.25)\n(d) rnd(7.25)",
-            answer: "c"
-        },
-        {
-            prompt: "How do you find the number with the highest value of x and y? \n(a) top(x, y)\n(b) ceil(x, y)\n(c) Math.ceil(x, y)\n(d) Math.max(x, y)",
-            answer: "d"
-        },
-        {
-            prompt: "How can you detect the client's browser name? \n(a) browser.name\n(b) client.navName\n(c) navigator.appName\n(d) client.appName",
-            answer: "c"
-        },
-        {
-            prompt: "Which event occurs when the user clicks on an HTML element? \n(a) onclick\n(b) onmouseover\n(c) onchange\n(d) onmouseclick",
-            answer: "a"
-        },
-        {
-            prompt: "How do you declare a JavaScript variable? \n(a) variable carName;\n(b) var carName;\n(c) v carName;\n(d) var = carName;",
-            answer: "b"
-        },
-        {
-            prompt: "Which operator is used to assign a value to a variable? \n(a) -\n(b) x\n(c) *\n(d) =",
-            answer: "d"
-        }
-    ]
-    var score = 0;
+    {
+        qn: "Inside which HTML element do we put the JavaScript; <.....>?",
+        options: ["(a) javascript","(b) script","(c) scripting","(d) js"],
+        answer: 1
+    },
+    
+    {
+        qn: "Where is the correct place to insert a JavaScript?",
+        options: ["(a) The <body> section","(b) Both the <head> section and the <body> section are correct","(c) The <head> section","(d) None"],
+        answer: 1
+    }
+]
 
-    for(var i = 0; i < questions.length; i++) {
-        var answer = window.prompt(questions[i].prompt);
-        if(answer == questions[i].answer) {
-            score++;
-            alert("Correct!");
-        } else {
-            alert("Wrong!");
+startBtn.addEventListener("click", startQuiz);
+
+function startQuiz() {
+    startBtn.classList.add("hide");
+    content.classList.add("hide");
+    questionContainerEl.classList.remove("hide");
+    loadQuestion(randomQuestion());
+    startTimer();
+};
+
+// setting questions and options and answers
+totalQuestionSpan.innerHTML = questions.length;
+function loadQuestion() {
+    questionNumberSpan.innerHTML = index + 1;
+    question.innerHTML = questions[questionIndex].qn;
+    op1.innerHTML = questions[questionIndex].options[0];
+    op2.innerHTML = questions[questionIndex].options[1];
+    op3.innerHTML = questions[questionIndex].options[2];
+    op4.innerHTML = questions[questionIndex].options[3];
+    index++;
+}
+
+// funtion timer
+function startTimer() {
+    let time = 200;
+    time --;
+}
+
+// checking options are correct or not
+function check(element) {
+    if(element.id == questions[questionIndex].answer) {
+        element.classList.add("correct");
+        score++;
+    } else {
+        element.classList.add("wrong");
+        time -10;
+    }
+    disabledOptions();
+}
+
+// if one option is selected by the user, disable other options
+function disabledOptions() {
+    for(let i = 0; i < options.length; i++) {
+        options[i].classList.add("disabled");
+        // if the user selects the wrong answer, displays the correct answer
+        if(options[i].id == questions[questionIndex].answer) {
+            options[i].classList.add("correct");
         }
     }
+}
+
+// enabling the options to go to next question
+function enableOptions() {
+    for(let i = 0; i < options.length; i++) {
+        options[i].classList.remove("disabled", "correct", "wrong");
+    }
+}
+
+// user should slect one option for each question before going to the next question
+function selectOption() {
+    if(!options[0].classList.contains("disabled")) {
+        alert("Please select atleast one option!");
+    } else {
+        enableOptions();
+        randomQuestion();
+    }
+}
+
+// setting next question
+// function next() {
+//     validate();
+//     randomQuestion();
+// }
+nextBtn.addEventListener("click", () => {
+    questionIndex++;
+    selectOption();
+    loadQuestion();
+});
+
+// getting random questions
+// also removing the duplicacy of the question
+function randomQuestion() {
+    let randomNumber = Math.floor(Math.random() * questions.length);
+    let duplicate = 0;
+    
+    if(index == questions.length) {
+        gameOver();
+        // nextBtn.innerText = "Game Over";
+    } else {
+        if(myArray.length > 0) {
+            for(let i = 0; i < myArray.length; i++) {
+                if(myArray[i] == randomNumber) {
+                    duplicate = 1;
+                    break;
+                }
+            }
+            if(duplicate == 1) {
+                randomQuestion();
+            } else {
+                questionIndex = randomNumber;
+            }
+        }
+        if(myArray.length == 0) {
+            questionIndex = randomNumber;
+        }
+        myArray.push(randomNumber);
+    }
+}
+
+function gameOver() {
+    questionContainerEl.classList.add("hide");
+    document.querySelector(".score").classList.remove("hide");
+    storedHighscore.classList.add("hide");
+    correctAnswer.innerHTML = score;
+    saveInitial();
+}
+
+function saveInitial() {
+    localStorage.setItem("initial", JSON.stringify(initial));
+    storedScore();
+}
+
+function storedScore() {
+    document.querySelector(".score").classList.add("hide");
+    storedHighscore.classList.remove("hide");
+
+    document.getElementById("storedInitial").innerHTML = JSON.parse(localStorage.getItem("initial"));
+
+    function clearHighscore() {
+        localStorage.removeItem("initial");
+    }
+}
+
+function goBack() {
+    window.location.reload();
 }
