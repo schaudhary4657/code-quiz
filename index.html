@@ -9,7 +9,7 @@
 <body>
     <nav>
         <a id = "highScores" onclick="storedScore()">View Highscores</a>
-        <a id = "time">Time</a>
+        <a id = "time">Time: 180s</a>
     </nav> <br />
 
     <div class = "container" id = "container">
@@ -53,7 +53,7 @@
 
         <div id = "storedHighscore" class = "storedHighscore hide">
             <p><b>Highscore</b></p>
-            <p><input type= "text" id = "storedInitial"></p>
+            <p id = "storedData"></p>
             <div>
                 <button id="goBack" type = "button" onclick="goBack()">Go Back</button>
                 <button id="clearScore" type = "button" onclick="clearHighscore()">Clear Highscore</button>
